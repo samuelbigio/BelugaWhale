@@ -5,8 +5,9 @@
 </head>
 <style>
 
-body { height: 100%; }
-div { cursor: url(cursor1.cur); z-index: 999; height: 100%; width: 100%; }
+
+
+div { cursor: url(cursor1.cur);  }
         
         div
         {
@@ -14,37 +15,92 @@ div { cursor: url(cursor1.cur); z-index: 999; height: 100%; width: 100%; }
 
         }
         
+        .content {
+            width: 100px;
+
+
+
+      }
+      
+      .content a {
+        color: darkblue;
+
+      }
+      .blue {
+
+        background-color: #1faadb;
+        height: 500px;
+      }
+      .green {
+        height: 250px;
+        background-color: #8ebf42;
+      }
         
 </style>
 
 
 <p>Drag the bar to change its width:</p>
-<div style="background: rgba(118, 79, 119, 0.733); width: 600px; height: 200px">
+<div class = "content">
+    <div class = "blue">
+    <p>sick graph</p>
 </div>
-<div class ="green" style="background: rgba(24, 231, 5, 0.733); width: 600px; height: 200px">
+</div>
+
+<div class = "content">
+        <div class = "green">
+        <p>lame graph</p>
     </div>
+    </div>
+    
+
 
 <script>
-let lastX; // Tracks the last observed mouse X position
-let bar = document.querySelector("div");
-250
-bar.addEventListener("mousedown", event => {
-if (event.button == 0) {
-lastX = event.clientX;
-window.addEventListener("mousemove", moved);
-event.preventDefault(); // Prevent selection
-}
-});
-function moved(event) {
-if (event.buttons == 0) {
-window.removeEventListener("mousemove", moved);
-} else {
-let dist = event.clientX - lastX;
-let newWidth = Math.max(10, bar.offsetWidth + dist);
-bar.style.width = newWidth + "px";
-lastX = event.clientX;
-}
-}
+    let lastX; // Tracks the last observed mouse X position
+    let bar = document.querySelector("div.blue");
+    let bargreen = document.querySelector("div.green")
+
+    bargreen.addEventListener("mousedown", event => {
+    if (event.button == 0) {
+        lastX = event.clientX;
+        window.addEventListener("mousemove", movedgreen);
+        event.preventDefault(); // Prevent selection
+        }
+    });
+
+    bar.addEventListener("mousedown", event => 
+        {
+        if (event.button == 0) {
+            lastX = event.clientX;
+            window.addEventListener("mousemove", moved);
+            event.preventDefault(); // Prevent selection
+            }
+        }
+    
+    );
+
+    function moved(event) {
+        if (event.buttons == 0) {
+            window.removeEventListener("mousemove", moved);
+        } else {
+            let dist = event.clientX - lastX;
+            let newWidth = Math.max(10, bar.offsetWidth + dist);
+            bar.style.width = newWidth + "px";
+            lastX = event.clientX;
+        }
+    }
+
+
+    
+    function movedgreen(event) {
+        if (event.buttons == 0) {
+            window.removeEventListener("mousemove", movedgreen);
+        } else {
+            let dist = event.clientX - lastX;
+            let newWidth = Math.max(10, bargreen.offsetWidth + dist);
+            bargreen.style.width = newWidth + "px";
+            lastX = event.clientX;
+        }
+    }
 
 //https://eloquentjavascript.net/Eloquent_JavaScript.pdf page 256
 </script>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<style>
+
+
+
+#myAnimation {
+
+  width: 456px;
+  height: 624px;
+  position: absolute;
+
+  
+
+
+}
+
+#whale {
+  background-image: url(baresam.png);
+  width: 100%;
+  height: 100%;
+
+
+}
+
+
+#myContainer {
+  width: auto;
+  height: auto;
+  position: relative;
+
+  
+}
+
+div
+{
+cursor:   url(cursor1.cur),auto;
+            
+}
+
+</style>
+
+<body>
+
+
+
+<p>
+  <button onclick="musicPlay()">Play</button>
+  <button onclick="musicPause()">Pause</button> 
+
+  <button onclick="musicStop()">Stop</button> 
+</p>
+    
+
+<div id ="myContainer">
+  <div id ="myAnimation">
+    <div id="whale">
+
+    </div>  
+  </div>
+</div>
+
+
+
+<script>
+
+  sidePos =0
+  UpPos=0
+  var audio = new Audio('music.mp3');
+  function musicPause(){
+    audio.pause()
+
+    }
+  function musicStop(){
+    var elem = document.getElementById("myAnimation");   
+    elem.style.top = 0 + 'px'; 
+    elem.style.left = 0+ 'px';
+    sidePos=0
+    UpPos=0
+    audio.pause()
+    audio.currentTime=0
+    }
+  
+
+  function musicPlay(){
+    audio.play();
+    }
+
+
+  
+  window.addEventListener("keydown", moveSomething, false);
+  
+  function moveSomething(e) {
+    var elem = document.getElementById("myAnimation");  
+      switch(e.keyCode) {
+          case 37:
+              // left key pressed
+              sidePos -=30
+              elem.style.left = sidePos + 'px'; 
+              break;
+          case 38:
+              // up key pressed
+              UpPos -=30
+              elem.style.top = UpPos + 'px'; 
+              break;
+          case 39:
+              // right key pressed
+              sidePos +=30
+              elem.style.left = sidePos + 'px'; 
+              break;
+          case 40:
+              // down key pressed
+              UpPos +=30
+              elem.style.top = UpPos + 'px'; 
+              break;  
+      }   
+  }  
+
+
+
+
+
+  function show_image(src, width, height, alt) {
+      var img = document.createElement("img");
+      img.src = src;
+      img.width = width;
+      img.height = height;
+      img.alt = alt;
+
+      // This next line will just add it to the <body> tag
+      document.body.appendChild(img);
+  }
+
+//<img src ="barewhale.png" alt="Computer man" style="width:753pxpx;height:1530px;">
+//<img src ="both.png" alt="Computer man" style="width:753pxpx;height:1530px;">
+
+// TODO:
+// I want to make the movement fluid when the keyboard is pressed down contiune moving 
+// right now it moves once regardless of duration of keystroke.
+// I want to add blocks so you can't move offscreen.
+// I want to rotate the image.
+// I want to introuduce the barewhale + collision + enemy. 
+</script>
+
+</body>
+</html>
+
+
