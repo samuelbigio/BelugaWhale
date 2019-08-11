@@ -11,17 +11,49 @@
   position: absolute;
 
   
+}
+
+
+#myAnimationWhale {
+
+width: 753px;
+height: 1530px;
+position: absolute;
 
 
 }
 
-#whale {
+#bareSam {
   background-image: url(baresam.png);
   width: 100%;
   height: 100%;
 
 
 }
+
+
+
+#both {
+  background-image: url(both.png);
+  width: 100%;
+  height: 100%;
+
+
+}
+
+
+
+
+#bareWhale {
+  background-image: url(bareWhale.png);
+  width: 100%;
+  height: 100%;
+
+
+}
+
+
+
 
 
 #myContainer {
@@ -50,11 +82,20 @@ cursor:   url(cursor1.cur),auto;
 
   <button onclick="musicStop()">Stop</button> 
 </p>
-    
+
+
+<div id ="myContainer">
+  <div id ="myAnimationWhale">
+    <div id="both">
+
+    </div>  
+  </div>
+</div>
+
 
 <div id ="myContainer">
   <div id ="myAnimation">
-    <div id="whale">
+    <div id="bareSam">
 
     </div>  
   </div>
@@ -62,10 +103,15 @@ cursor:   url(cursor1.cur),auto;
 
 
 
+
 <script>
 
   sidePos =0
   UpPos=0
+  baresameWidth = 456
+  baresameHeight = 624
+  speed = 30
+
   var audio = new Audio('music.mp3');
   function musicPause(){
     audio.pause()
@@ -92,25 +138,45 @@ cursor:   url(cursor1.cur),auto;
   
   function moveSomething(e) {
     var elem = document.getElementById("myAnimation");  
+    //console.log("up position", UpPos, "sidePos",sidePos);
+    //console.log("window height", window.innerHeight,"window width",window.innerWidth);
       switch(e.keyCode) {
           case 37:
               // left key pressed
-              sidePos -=30
+
+              if (sidePos - speed > - baresameWidth - speed)
+                sidePos -=speed
+              
+              else
+                sidePos= window.innerWidth - baresameWidth/2.
               elem.style.left = sidePos + 'px'; 
               break;
+
           case 38:
               // up key pressed
-              UpPos -=30
+              if (UpPos - speed > -1 * baresameHeight)
+                UpPos -=speed
+              else
+                UpPos = Math.floor(window.innerHeight - baresameHeight/2.);
+                //UpPos = screen.height - baresameHeight
               elem.style.top = UpPos + 'px'; 
               break;
           case 39:
               // right key pressed
-              sidePos +=30
+              if (sidePos + baresameWidth + speed < window.innerWidth)
+                sidePos +=speed
+              else
+                sidePos = -baresameWidth
+
               elem.style.left = sidePos + 'px'; 
               break;
           case 40:
               // down key pressed
-              UpPos +=30
+              
+              if (UpPos + speed  > window.innerHeight - baresameHeight)
+                UpPos = Math.floor(-baresameHeight * .8 - speed*2) 
+              else
+                UpPos +=speed
               elem.style.top = UpPos + 'px'; 
               break;  
       }   
@@ -135,9 +201,8 @@ cursor:   url(cursor1.cur),auto;
 //<img src ="both.png" alt="Computer man" style="width:753pxpx;height:1530px;">
 
 // TODO:
-// I want to make the movement fluid when the keyboard is pressed down contiune moving 
-// right now it moves once regardless of duration of keystroke.
-// I want to add blocks so you can't move offscreen.
+// I want to make the movement fluid when the keyboard is pressed down contiune moving (Done)
+// I want to add blocks so you can't move offscreen. (Done)
 // I want to rotate the image.
 // I want to introuduce the barewhale + collision + enemy. 
 </script>

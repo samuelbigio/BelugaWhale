@@ -20,6 +20,7 @@ div { cursor: url(cursor1.cur);  }
 
 
 
+
       }
       
       .content a {
@@ -29,11 +30,14 @@ div { cursor: url(cursor1.cur);  }
       .blue {
 
         background-color: #1faadb;
-        height: 500px;
+        height: 100px
+
       }
+
       .green {
-        height: 250px;
+
         background-color: #8ebf42;
+        height: 100px
       }
         
 </style>
@@ -52,12 +56,25 @@ div { cursor: url(cursor1.cur);  }
     </div>
     </div>
     
-
+    <!-- I used inline style so i wouldnt need css container per box !-->
+    <div class="Beige" style = "background-color :beige;width:100px;height:100px;">
+      <p>pp graph</p>
+    
+  </div>
+  
 
 <script>
     let lastX; // Tracks the last observed mouse X position
     let bar = document.querySelector("div.blue");
     let bargreen = document.querySelector("div.green")
+    
+    let barblue = document.querySelector("div.Beige");
+
+    //I moved these uphere so if you make another containter you wont forget
+    registerBarHandler(bar);
+    registerBarHandler(bargreen);
+    registerBarHandler(barblue);
+
 
 
     /***********************************************************************
@@ -100,9 +117,7 @@ div { cursor: url(cursor1.cur);  }
     	});
     }
 	
-    registerBarHandler(bar);
-    registerBarHandler(bargreen);
-
+   
  
 //https://eloquentjavascript.net/Eloquent_JavaScript.pdf page 256
 </script>
