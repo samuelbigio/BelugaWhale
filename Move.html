@@ -95,6 +95,7 @@ cursor:   url(cursor1.cur),auto;
   scale_factor= .25
   var count =0
   //Todo: Make a point to check if  auido.currentTime is past the intro to change speed/style
+  // if in breakdown of the song.
 
   
   var barewhaleImg = new Image();
@@ -105,10 +106,12 @@ cursor:   url(cursor1.cur),auto;
       barewhaleImg.height = whaleHeight * scale_factor
       barewhaleImg.width = whaleWidth * scale_factor
       count +=1
-      // Can you figure out why this is called more than once?
 
-      
+      // Can you figure out why this is called more than once? How many times is the 
+      // image loaded? every tick?
       console.log(count)
+
+
       document.body.appendChild(barewhaleImg)
   }
   
@@ -135,9 +138,9 @@ cursor:   url(cursor1.cur),auto;
   whaleSideDirection = 1
 
   // set element values for whale
-  var whaleElem = barewhaleImg
-  whaleElem.style.top = 0 + "px"
-  whaleElem.style.left = 0 + "px"
+  //var whaleElem = barewhaleImg  -> i replaced your code with my gloabal.
+  barewhaleImg.style.top = 0 + "px"
+  barewhaleImg.style.left = 0 + "px"
 
   var audio = new Audio('music.mp3');
   function musicPause(){
@@ -177,9 +180,22 @@ cursor:   url(cursor1.cur),auto;
     When whale hits the edge of the container it goes in the other
     direction (for instance if the whale hits the left edge it will
     start going right)
+
+    *******************************************************************
+    Hey jose, This isn't working anymore can you look at it and see why it doesn't work.
+    The only thing i changed was "var elem = barewhaleImg"
+
+    Also, I am going to add a random element to not just make the whale bounce off the walls
+    in the same pattern. I think the deflection is good but soon i am going to try and 
+    make the whale avoid the animation of naked boy to avoid it slowly.
+    
+
   */
   function moveWhale() {
-    var elem = document.getElementById("myAnimationWhale")
+
+
+    //Should grab the global
+    var elem = barewhaleImg
 
     leftPos =  parseInt(elem.style.left, 10);
     topPos =  parseInt(elem.style.top, 10);
@@ -214,6 +230,10 @@ cursor:   url(cursor1.cur),auto;
     } else {
       elem.style.top = newTopPos + "px"
     }
+
+
+
+
   }
 
   function moveSomething(e) {
@@ -262,6 +282,10 @@ cursor:   url(cursor1.cur),auto;
       }   
   }
 
+
+    //init is supposed to be called once and then i flip the initflag var/
+    // this is me attempting to not load the image continously. it doesn't work
+    // init is only called once but the image is loaded consecutively. 
     if (!initFlag)
     {
       init()
