@@ -1,13 +1,11 @@
 
 var rotate_deg = 0;
-var solo_whale_rotate_deg =0
-var solo_whale_rotate_rate = 0
-var x_momentum = 40;
-var y_momentum = 30;
+var x_momentum = 30;
+var y_momentum = 20;
 var rotate_rate = 3;
 const  MAX_MOMENTUM = 30
-const  SOLO_WHALE_MAX_MOMENTUM = 35
-var SOLO_whale_state = "Y_direction"
+var  SOLO_WHALE_MAX_MOMENTUM_X = 40
+var SOLO_WHALE_MAX_MOMENTUM_Y = 40
 var state = "SOLO"
 
 function load_img(filename,id)
@@ -57,6 +55,11 @@ function tick(){
 
 function whale_moves()
 {
+    /*
+    Whale changes direction when it hits the window border. flip whale momentum by opposite direction to
+    mimic bouncing off border
+    (look into scaling the momentum by window size)
+    */
     img = document.getElementById('image');
     barewhale_img = document.getElementById('barewhale');
     img_y = parseInt(img.style.top);
@@ -64,75 +67,17 @@ function whale_moves()
     barewhale_y = parseInt(barewhale_img.style.top);
     barewhale_x = parseInt(barewhale_img.style.left);
 
-    // EVADE Check if img is close enough to evade if not go to the center
-    if (Math.abs(barewhale_x - img_x) + Math.abs(barewhale_y - img_y)  < img.width*6)
-    {
-
-        if (img_y>= barewhale_y)
-        {
-            new_y = -SOLO_WHALE_MAX_MOMENTUM
-        }
-        else{
-            new_y = SOLO_WHALE_MAX_MOMENTUM
-        }
-
-        if (img_x>= barewhale_x)
-        {
-            new_x = -SOLO_WHALE_MAX_MOMENTUM
-            //if (img_x + img.width*2 > barewhale_x)
-               // barewhale_img.style.transform = "rotateY(0deg)"
-        }
-        else
-        {
-            new_x = SOLO_WHALE_MAX_MOMENTUM
-            //if (img_x - img.width*2 < barewhale_x)
-              //  barewhale_img.style.transform = "rotateY(180deg)";
-
-        }
-
-    }
-    else
-    {
-        console.log(barewhale_x + " " +window.innerWidth/2 )
-        if (barewhale_x > window.innerWidth/2)
-            new_x= -SOLO_WHALE_MAX_MOMENTUM
-        else
-            new_x = SOLO_WHALE_MAX_MOMENTUM
-
-         if (barewhale_y > window.innerHeight/2)
-            new_y= -SOLO_WHALE_MAX_MOMENTUM
-        else
-            new_y= SOLO_WHALE_MAX_MOMENTUM
-
-    }
 
 
+    new_x = barewhale_x - SOLO_WHALE_MAX_MOMENTUM_X
+    new_y = barewhale_y  - SOLO_WHALE_MAX_MOMENTUM_Y
 
-    new_x = new_x + barewhale_x
-    new_y = new_y + barewhale_y
+    if (new_x < 0  || new_x + barewhale_img.width > window.innerWidth  )
+        SOLO_WHALE_MAX_MOMENTUM_X *= -1
 
-    if (new_x + barewhale_img.width >= window.innerWidth)
-    {
 
-        new_x = barewhale_x // barewhale_img.width/2
-    }
-
-    else if (new_x + barewhale_img.width <= 0)
-    {
-         new_x = barewhale_x
-
-    }
-
-    if (new_y + barewhale_img.height >= window.innerHeight){
-
-        new_y =  barewhale_y // barewhale_img.height/2
-    }
-    else if (new_y + barewhale_img.height <= 0)
-    {
-        new_y =   barewhale_y
-
-    }
-
+    if (new_y < 0 || new_y + barewhale_img.height > window.innerHeight )
+        SOLO_WHALE_MAX_MOMENTUM_Y *= -1
 
     console.log(new_x + " " + new_y)
     barewhale_img.style.left = new_x + "px";
@@ -140,107 +85,6 @@ function whale_moves()
 
 
 }
-function whale_moves2()
-{
-    img = document.getElementById('image');
-    barewhale_img = document.getElementById('barewhale');
-    img_y = parseInt(img.style.top);
-    img_x = parseInt(img.style.left);
-    barewhale_y = parseInt(barewhale_img.style.top);
-    barewhale_x = parseInt(barewhale_img.style.left);
-
-    // EVADE Check if img is close enough to evade if not go to the center
-    if (Math.abs(barewhale_x - img_x) + Math.abs(barewhale_y - img_y)  < img.width*6)
-    {
-
-        if (img_y>= barewhale_y + img.height  * 2 )
-        {
-            new_y = -SOLO_WHALE_MAX_MOMENTUM
-        }
-        else if (img_y<= barewhale_y - img.height * 2){
-            new_y = SOLO_WHALE_MAX_MOMENTUM
-        }
-        else new_y = 0
-
-
-
-        if (img_x>= barewhale_x + img.width * 2)
-        {
-            new_x = -SOLO_WHALE_MAX_MOMENTUM
-            //if (img_x + img.width*2 > barewhale_x)
-               // barewhale_img.style.transform = "rotateY(0deg)"
-        }
-        else if (img_x<= barewhale_x - img.width  *2)
-        {
-            new_x = SOLO_WHALE_MAX_MOMENTUM
-            //if (img_x - img.width*2 < barewhale_x)
-              //  barewhale_img.style.transform = "rotateY(180deg)";
-
-        }
-        else new_x = 0
-
-    }
-    else
-    {
-        console.log(barewhale_x + " " +window.innerWidth/2 )
-        if (barewhale_x > window.innerWidth/2)
-            new_x= -SOLO_WHALE_MAX_MOMENTUM
-        else
-            new_x = SOLO_WHALE_MAX_MOMENTUM
-
-         if (barewhale_y > window.innerHeight/2)
-            new_y= -SOLO_WHALE_MAX_MOMENTUM
-        else
-            new_y= SOLO_WHALE_MAX_MOMENTUM
-
-    }
-
-
-
-    new_x = new_x + barewhale_x
-    new_y = new_y + barewhale_y
-    // Boundary check
-    if (new_x + barewhale_img.width >= window.innerWidth)
-    {
-
-        new_x = barewhale_x // barewhale_img.width/2
-    }
-
-    else if (new_x + barewhale_img.width <= 0)
-    {
-         new_x = barewhale_x
-
-    }
-
-    if (new_y + barewhale_img.height >= window.innerHeight){
-
-        new_y =  barewhale_y // barewhale_img.height/2
-    }
-    else if (new_y + barewhale_img.height <= 0)
-    {
-        new_y =   barewhale_y
-
-    }
-
-
-    console.log(new_x + " " + new_y)
-    if (SOLO_whale_state == 'Y_direction')
-    {
-        barewhale_img.style.left = new_x + "px";
-        SOLO_whale_state = 'X_direction'
-
-    }
-    else
-    {
-        barewhale_img.style.top = new_y + "px";
-        SOLO_whale_state = 'Y_direction'
-
-
-    }
-
-
-}
-
 
 
 function collesion(){
@@ -306,6 +150,7 @@ function mainMovement(){
 
 
 }
+
 
 var timer = setInterval(tick, 50)
 
