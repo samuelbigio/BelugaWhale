@@ -4,36 +4,31 @@ var x_momentum = 30;
 var y_momentum = 20;
 var rotate_rate = 3;
 const  MAX_MOMENTUM = 30
-var  SOLO_WHALE_MAX_MOMENTUM_X = 40
-var SOLO_WHALE_MAX_MOMENTUM_Y = 40
-var STELLA_MAX_MOMENTUM_Y = 45
-var STELLA_MAX_MOMENTUM_X = 50
+var  SOLO_WHALE_MAX_MOMENTUM_X = 11
+var SOLO_WHALE_MAX_MOMENTUM_Y = 16
+var STELLA_MAX_MOMENTUM_Y = 10
+var STELLA_MAX_MOMENTUM_X = 20
 var respawn_rate = 5
 var state = "SOLO"
 var both_state_count = 0
 var food_list = []
 var food_max = 4
+var stella_counter = 0
+
+var counter_screen_time = 0
+var flash = "false"
+
+var baresam_width = 0
+var whale_width = 0
+var stella_width = 0
+var food_width = 0
+
 
 /*
+
 TODO:
-1. rename barrewhale [DONE]
-2. make movement more random
-    change speed for stella (repurposed)
-3. kill animation of whale
-4. drop grapes and chocolate [DONE]
-5. kill animation of stella
-6. counter, increase stella speed in counter by 5
-7. reset chaser to opposite corner [DONE] / kinda
-
-
-new todo
-
-1. make a dead period for stella and barewhale
-2. make dead icon move a lil
-3. clear foods when state changes/ food collision
-4. remove food from html body
-5. still need the counter
-6. da song!
+3. Deploy
+4. refactor
 
 */
 function load_img(filename,id)
@@ -49,10 +44,36 @@ function load_img(filename,id)
 
 }
 
+function load_music()
+{
+    var music = document.createElement('AUDIO')
+    music.id = 'music'
+    music.src = 'music.mp3'
+    document.body.appendChild(music);
+    music.load()
+    //music.muted = "muted"
+    music.loop = "true"
+    //music.autoplay = ""
+    return music
+
+
+
+}
+
 
 
 function tick(){
+
+    //music = document.getElementById('music')
+    //music.play()
+
+    //Turn red past song breakdown
+    if (music.currentTime >= 61.73 && ( state == "CHASE" || state == "STELLA_DEAD"))
+        document.body.style.backgroundColor = "FireBrick";
+    else
+       document.body.style.backgroundColor = "white";
     mainMovement()
+
     if (state == "SOLO")
         {
         whale_moves()
@@ -79,6 +100,22 @@ function tick(){
     else if (state == "STELLA_DEAD" || state == "WHALE_DEAD")
     {
         dead()
+
+    }
+
+
+    // Flash counter for set amount of ticks
+    if (flash == "true" && counter_screen_time < 30 )
+    {
+        counter_screen_time +=1
+
+        if (counter_screen_time == 30)
+        {
+        counter_screen_time = 0
+        flash = "false"
+        counter = document.getElementById('counter')
+        counter.style.visibility = "hidden"
+        }
 
     }
 }
@@ -142,7 +179,7 @@ function respawn()
     if (both_state_count >= respawn_rate)
     {
     chaser.src = "stella.png"
-    chaser.width = 150
+    chaser.width = stella_width
     respawn_cords = get_respawn_cords(chaser)
     chaser.style.left =  (respawn_cords[0])+ "px";
     chaser.style.top =  (respawn_cords[1]) + "px";
@@ -232,6 +269,10 @@ function dead()
         {
             state = "SOLO"
             chaser.src = "barewhale.png"
+            chaser.width = whale_width
+            stella_counter = 0
+            update_counter()
+
 
         }
 
@@ -263,6 +304,7 @@ function collision(){
             img.src = "both.png"
             state = "BOTH"
             chaser.style.visibility = 'hidden'
+
         //chaser.src = "stelladed.png"
         }
         else
@@ -271,7 +313,7 @@ function collision(){
         state = "WHALE_DEAD"
         img.src = "baresam.png"
         chaser.src = 'WhaleDED.png'
-        chaser.width = 300
+        chaser.width = whale_width * 4
         chaser.style.transform = "rotate(0deg)";
         chaser.style.transform = "scaleY(-1)"
         remove_food()
@@ -312,25 +354,110 @@ function mainMovement(){
 
 }
 
+function dynamic_widths()
+{
+
+    baresam_width = window.innerWidth * .08
+    whale_width = window.innerWidth * .075
+    stella_width = window.innerWidth * .15
+    food_width = window.innerWidth * .05
+
+
+}
+
+function on_click_mute()
+{
+    btn = document.getElementById('mute');
+    music = document.getElementById('music')
+    //alert(music.mute)
+    if (music.mute == "false")
+    {
+        music.mute = "true"
+        //music.pause()
+        music.volume = "0"
+        btn.innerHTML  = '<img src="assets/mute_none.png" width = 20 />'
+    }
+    else
+    {
+        //music.play()
+        music.mute = "false"
+        music.volume = ".5"
+        btn.innerHTML  = '<img src="assets/mute.png" width = 20 />'
+    }
+
+
+}
+function mute_buttons()
+{
+    var btn = document.createElement('button');
+    btn.id = 'mute';
+    //loaded_image.style.position = "absolute";
+    //loaded_image.style.transform = "rotate(" + rotate_deg + ")";
+    //btn.style.cursor = "pointer"
+
+    btn.innerHTML  = '<img src="assets/mute.png" width = 20 />'
+    btn.style.padding = '1px'
+
+    btn.width = 20
+    document.body.appendChild(btn);
+    btn.onclick  = on_click_mute
+    //loaded_image.src = filename;
+    return btn
+}
+
+function add_counter()
+{
+    element = document.createElement("div")
+    element.id = "counter"
+    element.innerHTML = "0"
+    element.style.alignItems  = "center"
+    element.style.justifyContent = "center"
+    element.style.textAlign = "center"
+    //element.style.font  = "normal bold 50px arial,serif"
+    element.style.font  = "normal bold 50px Brush Script MT"
+
+    element.style.visibility = "hidden"
+    document.body.appendChild(element)
+
+
+}
+
 
 var timer = setInterval(tick, 50)
 
 // INIT
 window.onload = function () {
+
+    music = load_music()
+
     chaser =  load_img('barewhale.png','chaser')
     baresam = load_img('baresam.png','image')
 
-    if (window.innerWidth < 1000)
-        baresam.width = 50
+    dynamic_widths()
+    baresam.width = baresam_width
+    chaser.width = whale_width
 
-    else
-        baresam.width = 100
-
-    chaser.width = 100
     chaser_y = window.innerHeight - (chaser.width * 3)
     chaser_x = window.innerWidth - (chaser.width * 3)
     chaser.style.left = chaser_x + "px";
     chaser.style.top = chaser_y + "px";
+    music.mute = "false"
+
+
+
+
+    //mute_btn =  load_img('assets/mute.png','mute')
+    //mute_btn.width = 40
+
+    mute_buttons()
+
+    add_counter()
+
+
+
+
+
+
 
 }
 
@@ -360,11 +487,27 @@ function food_collision()
                 chaser.src = "stelladed.png"
                 chaser.style.transform = "scaleY(-1)"
                 remove_food()
+                stella_counter +=1
+                update_counter()
+
                 break;
             }
 
         }
 
+    }
+
+}
+
+function update_counter()
+{
+    counter = document.getElementById('counter')
+    counter.innerHTML = stella_counter
+    if (stella_counter != 0)
+    {
+        counter.style.visibility = "visible"
+        counter_screen_time = 0
+        flash = "true"
     }
 
 }
@@ -390,7 +533,7 @@ function add_food(x,y)
 
        food = load_img('food' + ((food_list.length % 2) + 1 ) +  '.PNG', 'food'+  food_list.length.toString(10))
        food_list.push(food)
-       food.width = 70
+       food.width = food_width
       food.style.left = x + "px";
       food.style.top = y + "px";
 
@@ -409,6 +552,8 @@ function add_food(x,y)
 
 
 }
+
+window.addEventListener('resize',dynamic_widths)
 
 window.addEventListener('mousedown', e => {
       var img = document.getElementById('image');
@@ -435,6 +580,10 @@ window.addEventListener('mousedown', e => {
 
        }
 
+        music = document.getElementById('music')
+        if (music.mute == "false")
+            music.play()
+        //alert(music.currentTime)
 
 } );
 
