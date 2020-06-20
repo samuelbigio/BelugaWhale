@@ -178,7 +178,7 @@ function respawn()
 {
     if (both_state_count >= respawn_rate)
     {
-    chaser.src = "stella.png"
+    chaser.src = "assets/stella.png"
     chaser.width = stella_width
     respawn_cords = get_respawn_cords(chaser)
     chaser.style.left =  (respawn_cords[0])+ "px";
@@ -261,14 +261,14 @@ function dead()
        if (state == "STELLA_DEAD")
         {
             state = "CHASE"
-            chaser.src = "stella.png"
+            chaser.src = "assets/stella.png"
 
         }
 
         else
         {
             state = "SOLO"
-            chaser.src = "barewhale.png"
+            chaser.src = "assets/barewhale.png"
             chaser.width = whale_width
             stella_counter = 0
             update_counter()
@@ -301,7 +301,7 @@ function collision(){
      {
         if ( state == "SOLO")
         {
-            img.src = "both.png"
+            img.src = "assets/both.png"
             state = "BOTH"
             chaser.style.visibility = 'hidden'
 
@@ -311,8 +311,8 @@ function collision(){
         {
 
         state = "WHALE_DEAD"
-        img.src = "baresam.png"
-        chaser.src = 'WhaleDED.png'
+        img.src = "assets/baresam.png"
+        chaser.src = 'assets/WhaleDED.png'
         chaser.width = whale_width * 4
         chaser.style.transform = "rotate(0deg)";
         chaser.style.transform = "scaleY(-1)"
@@ -430,8 +430,8 @@ window.onload = function () {
 
     music = load_music()
 
-    chaser =  load_img('barewhale.png','chaser')
-    baresam = load_img('baresam.png','image')
+    chaser =  load_img('assets/barewhale.png','chaser')
+    baresam = load_img('assets/baresam.png','image')
 
     dynamic_widths()
     baresam.width = baresam_width
@@ -484,7 +484,7 @@ function food_collision()
                 //img.src = "both.png"
                 state = "STELLA_DEAD"
                 //chaser.style.visibility = 'hidden'
-                chaser.src = "stelladed.png"
+                chaser.src = "assets/stelladed.png"
                 chaser.style.transform = "scaleY(-1)"
                 remove_food()
                 stella_counter +=1
@@ -531,7 +531,7 @@ function add_food(x,y)
     if (food_list.length < food_max)
     {
 
-       food = load_img('food' + ((food_list.length % 2) + 1 ) +  '.PNG', 'food'+  food_list.length.toString(10))
+       food = load_img('assets/food' + ((food_list.length % 2) + 1 ) +  '.PNG', 'food'+  food_list.length.toString(10))
        food_list.push(food)
        food.width = food_width
       food.style.left = x + "px";
