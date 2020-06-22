@@ -64,7 +64,7 @@ function load_music()
 
 function tick(){
 
-    //music = document.getElementById('music')
+    music = document.getElementById('music')
     //music.play()
 
     //Turn red past song breakdown
@@ -375,14 +375,14 @@ function on_click_mute()
         music.mute = "true"
         //music.pause()
         music.volume = "0"
-        btn.innerHTML  = '<img src="assets/mute_none.png" width = 20 />'
+        btn.innerHTML  = '<img src="assets/mute.png" width = 20 />'
     }
     else
     {
         //music.play()
         music.mute = "false"
         music.volume = ".5"
-        btn.innerHTML  = '<img src="assets/mute.png" width = 20 />'
+        btn.innerHTML  = '<img src="assets/mute_none.png" width = 20 />'
     }
 
 
@@ -395,7 +395,7 @@ function mute_buttons()
     //loaded_image.style.transform = "rotate(" + rotate_deg + ")";
     //btn.style.cursor = "pointer"
 
-    btn.innerHTML  = '<img src="assets/mute.png" width = 20 />'
+    btn.innerHTML  = '<img src="assets/mute_none.png" width = 20 />'
     btn.style.padding = '1px'
 
     btn.width = 20
