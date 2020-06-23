@@ -389,7 +389,7 @@ function on_click_mute()
     {
         music.play()
         music.mute = "false"
-        music.volume = ".5"
+        music.volume = "1"
         btn.innerHTML  = '<img src="assets/mute_none.png" width = 40 height = 30 />'
     }
 
@@ -463,6 +463,7 @@ window.onload = function () {
 
    var full_scren_div = document.createElement('div');
   full_scren_div.id = "full_screen"
+  full_screen.style.overflow = "hidden"
   //full_screen.onclick = void(0)
   full_scren_div.onclick = alert_onclick
   full_scren_div.style.minHeight = "100vh";
