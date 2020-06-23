@@ -459,19 +459,26 @@ window.onload = function () {
 
     mute_buttons()
     add_counter()
+   make_ios_clickable()
 
+    //make screen not scrollable and revert to top
+   document.body.style.position = "relative"
+   document.body.style.overflow = "hidden"
 
-   var full_scren_div = document.createElement('div');
-  full_scren_div.id = "full_screen"
-  //full_screen.style.overflow = "hidden"
-  //full_screen.onclick = void(0)
-  full_scren_div.onclick = alert_onclick
-  full_scren_div.style.minHeight = "100vh";
-  document.body.appendChild(full_scren_div);
 
 
 }
 
+function make_ios_clickable()
+{
+
+   var full_scren_div = document.createElement('div');
+  full_scren_div.id = "full_screen"
+  //full_screen.style.overflow = "hidden"
+  full_scren_div.onclick = alert_onclick
+  full_scren_div.style.minHeight = "100vh";
+  document.body.appendChild(full_scren_div);
+}
 
 function food_collision()
 {
