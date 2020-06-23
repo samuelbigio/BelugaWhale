@@ -454,9 +454,11 @@ window.onload = function () {
     mute_buttons()
     add_counter()
 
-   var full_scren_div = document.createElement('div');
-  full_scren_div.style.minHeight = "100vh";
 
+   var full_scren_div = document.createElement('div');
+  full_scren_div.id = "full_screen"
+  full_screen.onclick = void(0)
+  full_scren_div.style.minHeight = "100vh";
   document.body.appendChild(full_scren_div);
 
 
