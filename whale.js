@@ -37,6 +37,10 @@ function load_img(filename,id)
   loaded_image.id = id;
   loaded_image.style.position = "absolute";
   loaded_image.style.transform = "rotate(" + rotate_deg + ")";
+  loaded_image.style.userSelect = "none"
+  loaded_image.style.userDrag = "none"
+  //loaded_image.style. = "none"
+
 
   document.body.appendChild(loaded_image);
   loaded_image.src = filename;
@@ -135,7 +139,7 @@ function get_respawn_cords(respawn_image)
 
     else if (respawn_corner == 2)
     {
-        x =   (window.innerWidth - respawn_image.width)
+        x =   (window.innerWidth - respawn_image.width *2)
         y =  0
 
         SOLO_WHALE_MAX_MOMENTUM_X =  -Math.abs(SOLO_WHALE_MAX_MOMENTUM_X)
@@ -148,7 +152,7 @@ function get_respawn_cords(respawn_image)
     else if (respawn_corner == 3)
     {
             x =   0
-            y =  (window.innerHeight - respawn_image.height)
+            y =  (window.innerHeight - respawn_image.height *2)
 
 
             SOLO_WHALE_MAX_MOMENTUM_X = Math.abs(SOLO_WHALE_MAX_MOMENTUM_X)
@@ -159,8 +163,8 @@ function get_respawn_cords(respawn_image)
     }
     else
     {
-        x =   (window.innerWidth - respawn_image.width )
-        y =  (window.innerHeight - respawn_image.height)
+        x =   (window.innerWidth - respawn_image.width * 2 )
+        y =  (window.innerHeight - respawn_image.height * 2)
 
         SOLO_WHALE_MAX_MOMENTUM_X = -Math.abs(SOLO_WHALE_MAX_MOMENTUM_X)
         SOLO_WHALE_MAX_MOMENTUM_Y = -Math.abs(SOLO_WHALE_MAX_MOMENTUM_Y)
@@ -377,16 +381,16 @@ function on_click_mute()
     if (music.mute == "false")
     {
         music.mute = "true"
-        //music.pause()
+        music.pause()
         music.volume = "0"
-        btn.innerHTML  = '<img src="assets/mute.png" width = 20 />'
+        btn.innerHTML  = '<img src="assets/mute.png" width = 40 />'
     }
     else
     {
-        //music.play()
+        music.play()
         music.mute = "false"
         music.volume = ".5"
-        btn.innerHTML  = '<img src="assets/mute_none.png" width = 20 />'
+        btn.innerHTML  = '<img src="assets/mute_none.png" width = 40 />'
     }
 
 
@@ -399,10 +403,10 @@ function mute_buttons()
     //loaded_image.style.transform = "rotate(" + rotate_deg + ")";
     //btn.style.cursor = "pointer"
 
-    btn.innerHTML  = '<img src="assets/mute_none.png" width = 20 />'
+    btn.innerHTML  = '<img src="assets/mute_none.png" width = 40 />'
     btn.style.padding = '1px'
 
-    btn.width = 20
+    btn.width = 40
     document.body.appendChild(btn);
     btn.onclick  = on_click_mute
     //loaded_image.src = filename;
