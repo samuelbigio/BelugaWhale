@@ -462,7 +462,7 @@ window.onload = function () {
    make_ios_clickable()
 
     //make screen not scrollable and revert to top
-   document.body.style.position = "relative"
+   //document.body.style.position = "relative"
    document.body.style.overflow = "hidden"
 
 
