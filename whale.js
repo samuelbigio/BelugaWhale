@@ -66,9 +66,8 @@ function tick(){
 
     music = document.getElementById('music')
     //music.play()
-
     //Turn red past song breakdown
-    if (music.currentTime >= 61.73 && ( state == "CHASE" || state == "STELLA_DEAD"))
+    if (music != null && music.currentTime >= 61.73 && ( state == "CHASE" || state == "STELLA_DEAD"))
         document.body.style.backgroundColor = "FireBrick";
     else
        document.body.style.backgroundColor = "white";
@@ -202,6 +201,8 @@ function whale_moves()
     (look into scaling the momentum by window size)
     */
     img = document.getElementById('image');
+    if (img == null)
+        return
     chaser = document.getElementById('chaser');
     img_y = parseInt(img.style.top);
     img_x = parseInt(img.style.left);
@@ -289,7 +290,8 @@ function dead()
 function collision(){
     let img = document.getElementById('image')
     let chaser = document.getElementById('chaser')
-
+    if (img == null)
+        return
     chaser_y = parseInt(chaser.style.top)
     chaser_x = parseInt(chaser.style.left)
     img_y = parseInt(img.style.top)
@@ -325,6 +327,8 @@ function collision(){
 
 function mainMovement(){
      var img = document.getElementById('image')
+     if (img == null)
+        return
      rotate_deg += rotate_rate % 360
      img.style.transform =  "rotate(" + rotate_deg + "deg)";
 
@@ -444,19 +448,16 @@ window.onload = function () {
     music.mute = "false"
 
 
-
-
     //mute_btn =  load_img('assets/mute.png','mute')
     //mute_btn.width = 40
 
     mute_buttons()
-
     add_counter()
 
+   var full_scren_div = document.createElement('div');
+  full_scren_div.style.minHeight = "100vh";
 
-
-
-
+  document.body.appendChild(full_scren_div);
 
 
 }
