@@ -383,15 +383,17 @@ function on_click_mute()
         music.mute = "true"
         music.pause()
         music.volume = "0"
-        btn.innerHTML  = '<img src="assets/mute.png" width = 40 />'
+        btn.innerHTML  = '<img src="assets/mute.png" width = 40 height = 30  />'
     }
     else
     {
         music.play()
         music.mute = "false"
         music.volume = ".5"
-        btn.innerHTML  = '<img src="assets/mute_none.png" width = 40 />'
+        btn.innerHTML  = '<img src="assets/mute_none.png" width = 40 height = 30 />'
     }
+
+
 
 
 }
@@ -403,7 +405,7 @@ function mute_buttons()
     //loaded_image.style.transform = "rotate(" + rotate_deg + ")";
     //btn.style.cursor = "pointer"
 
-    btn.innerHTML  = '<img src="assets/mute_none.png" width = 40 />'
+    btn.innerHTML  = '<img src="assets/mute_none.png" width = 40  />'
     btn.style.padding = '1px'
 
     btn.width = 40
