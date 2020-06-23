@@ -458,7 +458,7 @@ window.onload = function () {
    var full_scren_div = document.createElement('div');
   full_scren_div.id = "full_screen"
   //full_screen.onclick = void(0)
-  full_scren_div.onclick = "void(0);"
+  full_scren_div.onclick = alert_onclick
   full_scren_div.style.minHeight = "100vh";
   document.body.appendChild(full_scren_div);
 
