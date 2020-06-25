@@ -425,7 +425,6 @@ function add_counter()
     element.style.textAlign = "center"
     //element.style.font  = "normal bold 50px arial,serif"
     element.style.font  = "normal bold 50px Brush Script MT"
-
     element.style.visibility = "hidden"
     document.body.appendChild(element)
 
@@ -463,7 +462,7 @@ window.onload = function () {
 
     //make screen not scrollable and revert to top
    //document.body.style.position = "relative"
-   document.body.style.overflow = "hidden"
+   //document.body.style.overflow = "hidden"
 
 
 
